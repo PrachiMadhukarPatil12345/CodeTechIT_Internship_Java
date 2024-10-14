@@ -1,0 +1,92 @@
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+public class StudentGradeTracker {
+
+    // HashMap to store subject names and their corresponding grades
+    private Map<String, Double> grades = new HashMap<>();
+
+    // Method to add grade for a subject
+    public void addGrade(String subject, double grade) {
+        grades.put(subject, grade);
+    }
+
+    // Method to calculate the average grade
+    public double calculateAverage() {
+        double total = 0;
+        for (double grade : grades.values()) {
+            total += grade;
+        }
+        return total / grades.size();
+    }
+
+    // Method to calculate the letter grade based on the average
+    public String calculateLetterGrade(double average) {
+        if (average >= 90) {
+            return "A";
+        } else if (average >= 80) {
+            return "B";
+        } else if (average >= 70) {
+            return "C";
+        } else if (average >= 60) {
+            return "D";
+        } else {
+            return "F";
+        }
+    }
+
+    // Method to calculate the GPA based on the average
+    public double calculateGPA(double average) {
+        if (average >= 90) {
+            return 4.0;
+        } else if (average >= 80) {
+            return 3.0;
+        } else if (average >= 70) {
+            return 2.0;
+        } else if (average >= 60) {
+            return 1.0;
+        } else {
+            return 0.0;
+        }
+    }
+
+    // Method to display all the student grades and summary
+    public void displaySummary() {
+        System.out.println("\n--- Grade Summary ---");
+        for (Map.Entry<String, Double> entry : grades.entrySet()) {
+            System.out.println("Subject: " + entry.getKey() + ", Grade: " + entry.getValue());
+        }
+
+        double average = calculateAverage();
+        System.out.println("\nAverage Grade: " + average);
+        System.out.println("Letter Grade: " + calculateLetterGrade(average));
+        System.out.println("GPA: " + calculateGPA(average));
+    }
+
+    // Main method to run the program
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        StudentGradeTracker tracker = new StudentGradeTracker();
+
+        // Get grades from the user
+        System.out.println("Enter the number of subjects:");
+        int numSubjects = scanner.nextInt();
+        scanner.nextLine(); // Consume the newline
+
+        for (int i = 0; i < numSubjects; i++) {
+            System.out.println("Enter subject name:");
+            String subject = scanner.nextLine();
+
+            System.out.println("Enter grade for " + subject + " (0-100):");
+            double grade = scanner.nextDouble();
+            scanner.nextLine(); // Consume the newline
+
+            tracker.addGrade(subject, grade);
+        }
+
+        // Display the summary of grades
+        tracker.displaySummary();
+    }
+}
+
